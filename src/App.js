@@ -1,14 +1,18 @@
 import React from 'react';
+import { Route , Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import './style.scss';
+import Provider from './utils/Provider';
+import 'flickity/dist/flickity.min.css';
 
-
-const App = () => {
-    
-    return (
-        <>
-          hello
-        </>
-    )
-    
+function App() {
+  return (
+      <Provider>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+      </Routes>
+      </Provider>
+  );
 }
 
 export default App;
