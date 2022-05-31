@@ -1,15 +1,18 @@
 const pageItemsType = {
     Slider: "Slider",
-    Advertisement: "Advertisement",
+    UserLatestSeries: "UserLatestSeries",
     PostGroup: "PostGroup",
-    // Latest: "Latest",
-    // LatestMovies: "LatestMovies",
-    // LatestSeries: "LatestSeries",
+    LatestLivePost: "LatestLivePost",
+    ExclusiveContent: "ExclusiveContent",
+    UnknownDatePublishGroup: "UnknownDatePublishGroup",
+    RecommendedMediaForUser: "RecommendedMediaForUser",
+    Latest:"Latest",
+    RecommendedMediasToMediaForUser: "RecommendedMediasToMediaForUser",
     Favorite: "Favorite",
     LatestEpisods: "LatestEpisods",
-    // ExclusiveDubsMovies: "ExclusiveDubsMovies",
-    // ExclusiveDubsSeries: "ExclusiveDubsSeries",
+    Continuation: "Continuation",
     ExclusiveDubs: "ExclusiveDubs",
+    StarGroup: "StarGroup",
     CategoryGroup: "CategoryGroup",
     BannerGroup: "BannerGroup",
 }
@@ -28,7 +31,7 @@ export default {
             url : '/api/v2.0/medias/sliders/{{SLIDER_ID}}',
         },
         [pageItemsType.PostGroup]: {
-            url: 'api/v1.0/post-groups/{PAYLOAD_KEY}/medias',
+            url: 'api/v1.0/post-groups/{{PAYLOAD_KEY}}/medias',
             pi: 1,
             ps: 20,
         }

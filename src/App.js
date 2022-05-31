@@ -9,7 +9,7 @@ function App() {
   return (
       <Provider>
         <Routes>
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<Home/>} exact={true}/>
       </Routes>
       </Provider>
   );

@@ -39,7 +39,7 @@ const reducer = (state,action) => {
 
 const MenusProvider = ({children}) => {
 
-    let [state,dispatch] = useReducer(reducer, initializeState);
+    let [state,dispatch] = useReducer(reducer, initializeState, () => initializeState);
 
     return(
         <MenusContext.Provider value={{state,dispatch}}>
