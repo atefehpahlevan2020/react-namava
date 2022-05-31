@@ -4,6 +4,7 @@ import './RowList.scss';
 import Flickity from 'flickity';
 import { fetchData } from "../../utils/functions";
 import { RealLazyLoad } from 'real-react-lazyload';
+import PreviewItem from "../movie/PreviewItem";
 
 
 const types = {
@@ -14,15 +15,16 @@ const types = {
 }
 
 let rowListReducer = (state, action) => {
+
     switch (action.type) {
         case types.SET_LOADING:
-            state = {...state, loading: action.loading};
+            state = {...state, loading: true};
             break;
         case types.SET_ITEMS:
-            state = {...state, items: action.items, error: false};
+            state = {...state, items: action.items, error: false,loading: false};
             break;
         case types.SET_ERROR:
-            state = {...state, items : [], error : action.error};
+            state = {...state, items : [], error : action.error, loading : false};
             break;
         case types.SET_FETCH_REQUEST:
             state = {...state, fetchRequest: true};
@@ -39,7 +41,7 @@ let initialState = {
     error : false,
     fetchRequest : false,
 }
-const RowList = React.forwardRef(({className,data:{payloadType,payloadKey,title},ItemComponent,placeholder = false},ref) => {
+const RowList = React.forwardRef(({className,data:{payloadType,payloadKey,title},ItemComponent,placeholder = false, preview = false},ref) => {
 
     let flickityRef = createRef();
     let [state,dispatch] = useReducer(rowListReducer, initialState, (initState) => initState);
@@ -52,7 +54,9 @@ const RowList = React.forwardRef(({className,data:{payloadType,payloadKey,title}
             },(error) => {
                 dispatch({type: types.SET_ERROR, error});
             },(isLoading) => {
-                dispatch({type: types.SET_LOADING, loading: isLoading});
+                if(isLoading) {
+                    dispatch({type: types.SET_LOADING, loading: isLoading});
+                }
             })
         }
     },[payloadKey,payloadType,placeholder,fetchRequest,dispatch,items.length,loading,error]);
@@ -89,7 +93,7 @@ const RowList = React.forwardRef(({className,data:{payloadType,payloadKey,title}
                 content.push(<ItemComponent key={`row-item-${payloadType}-${payloadKey}-${i}`} placeholder={true}/>)
             }
         }else {
-            content = items.map(item => (<ItemComponent key={`row-item-${payloadType}-${payloadKey}-${item['id']}`} item={item}/>))
+            content = items.map(item => (<ItemComponent key={`row-item-${payloadType}-${payloadKey}-${item['id'] || item['episodId']}`} item={item}/>))
         }
         return content;
     }
@@ -119,7 +123,7 @@ const RowList = React.forwardRef(({className,data:{payloadType,payloadKey,title}
                 <RealLazyLoad forceVisible={canIRender} placeholder={
                     <RowList placeholder={true} data={{payloadKey,payloadType}} ItemComponent={ItemComponent}/>
                 } componentEntryCallback={() =>{
-                    if(fetchRequest === false) {
+                    if(fetchRequest === false && loading === false) {
                         dispatch({type: types.SET_FETCH_REQUEST});
                     }
                     return false;
@@ -129,6 +133,7 @@ const RowList = React.forwardRef(({className,data:{payloadType,payloadKey,title}
                     </div>
                 </RealLazyLoad>
             </div>
+            {(preview === true && canIRender) && (<PreviewItem/>)}
         </div>
     )
 })

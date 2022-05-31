@@ -4,7 +4,9 @@ import MovieItem from "../components/MovieItem";
 import Slider from "../components/slider/Slider";
 import Config from "../config";
 import { types,useMenus } from "../context/MenusContext";
+import { getItemComponent } from "../utils/functions";
 import namava from "../utils/namava";
+import BannerItem from '../components/BannerItem';
 
 
 const fetchMenus = async (dispatch) => {
@@ -43,18 +45,31 @@ const Home = () => {
             <div className="row">
                 {(menus.loading === false && menus.succeeded === true) && menus.home.pageItems.map(({payloadType,payloadKey,...pageItem}) => {
                     let section = undefined;
-
+                    let preview = false;
                     switch (payloadType) {
                         case Config.pageItemsType.Slider:
                             section = <Slider key={`page-section-${pageItem['pageItemId']}`} sliderID={payloadKey}/>
                             break;
+                        case Config.pageItemsType.Latest:
+                        case Config.pageItemsType.LatestEpisods:
+                        case Config.pageItemsType.CategoryGroup:
+                        case Config.pageItemsType.ExclusiveDubs:
                         case Config.pageItemsType.PostGroup:
-                            let itemComponent = MovieItem;
-                            section = <RowList key={`page-section-${pageItem['pageItemId']}`} data={{
+                            if(payloadType !== Config.pageItemsType.CategoryGroup) {
+                                preview = true;
+                            }
+                            let itemComponent = getItemComponent(payloadType);
+                            section = <RowList preview={preview} key={`page-section-${pageItem['pageItemId']}`} data={{
                                 payloadType,
                                 payloadKey,
                                 title: pageItem['caption']
                             }} ItemComponent={itemComponent}/>
+                            break;
+                        case Config.pageItemsType.BannerGroup:
+                            section = <RowList className='Banner' key={`page-section-${pageItem['pageItemId']}`} data={{
+                                payloadType,
+                                payloadKey
+                            }} ItemComponent={BannerItem}/>
                             break;
                         default:
                             section = undefined;
