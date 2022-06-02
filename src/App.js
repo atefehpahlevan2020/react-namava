@@ -12,7 +12,7 @@ function App() {
       <Provider>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path={'/:type/:id([0-9]+):name'} element={<Single/>}/>
+          <Route path={'/:type/:id/*'} element={<Single/>}/>
       </Routes>
       </Provider>
   );

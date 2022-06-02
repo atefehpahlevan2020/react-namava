@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {ImageRealLazyLoad} from 'real-react-lazyload';
 import { getNamavaUrl } from "../utils/functions";
 import './BannerItem.scss';
