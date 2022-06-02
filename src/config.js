@@ -66,6 +66,15 @@ export default {
         },
         "BriefData": {
             url : 'api/v1.0/medias/{{ID}}/brief-preview'
+        },
+        "Preview": {
+            url : 'api/v1.0/medias/{{PAYLOAD_KEY}}/preview'
+        },
+        "SinglePageMovie": {
+            url : 'api/v2.0/medias/{{PAYLOAD_KEY}}/single-movie'
+        },
+        "SinglePageSeries": {
+            url : 'api/v2.0/medias/{{PAYLOAD_KEY}}/single-series'
         }
     }
 }

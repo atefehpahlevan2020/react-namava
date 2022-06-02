@@ -33,8 +33,7 @@ const PreviewItem = ({id,isActive}) => {
         id : undefined,
         data : null,
         loading : false,
-    })
-
+    });
     let previewRef = useRef();
 
     useEffect(() => {
