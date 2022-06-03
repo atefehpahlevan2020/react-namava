@@ -10,10 +10,14 @@ import Single from './pages/Single';
 function App() {
   return (
       <Provider>
-        <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path={'/:type/:id/*'} element={<Single/>}/>
-      </Routes>
+        <div className='container-fluid'>
+            <div className='row p-0'>
+            <Routes>
+              <Route path='/' element={<Home/>}/>
+              <Route path={'/:type/:id/*'} element={<Single/>}/>
+            </Routes>
+            </div>
+        </div>
       </Provider>
   );
 }
